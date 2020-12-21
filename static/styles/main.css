@@ -6,9 +6,9 @@
 body {
   font-family: 'montserrat', sans-serif;
   background-image: var(--background_pic);
+  background-position: top center;
   background-size: auto;
   back-repeat: no-repeat;
-  background-position: top center;
 }
 
 .body-wrap {
