@@ -3,6 +3,7 @@ import requests
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from datetime import datetime
+import re
 
 app = Flask(__name__)
 load_dotenv(verbose=True)
@@ -10,42 +11,41 @@ API_KEY = os.getenv('API_KEY')
 
 
 @app.route('/', methods=['POST', 'GET'])
-def render_results():
+def render_main_page():
     init_zip = 90001
     message = ""
 
-    if request.method == 'POST':
-        zip_code = request.form['zipCode']
-        if check_valid_zip(zip_code):
-            data = get_weather_results(zip_code, API_KEY)
-        else:
-            data = get_weather_results(init_zip, API_KEY)
-            message += "{} is not a valid zip code.".format(zip_code)
+    if request.method != 'POST':
+        data = call_api(init_zip, API_KEY)
     else:
-        data = get_weather_results(init_zip, API_KEY)
+        zip_code = request.form['zipCode']
+        data = call_api(zip_code, API_KEY)
+        if not valid_api_return(data):
+            data = call_api(init_zip, API_KEY)
+            message += "{} is not a valid zip code.".format(zip_code)
 
     date = datetime.now()
     today = date.strftime("%A %B %d %Y")
-
+    print(data)
     temp = "{0:.1f}°F".format(data["main"]["temp"])
-    hilow = "{0:.0f}°F - {0:.0f}°F".format(data["main"]["temp_min"], data["main"]["temp_max"])
+    low = "{0:.0f}°F".format(data["main"]["temp_min"])
+    high = "{0:.0f}°F".format(data["main"]["temp_max"])
     weather = data["weather"][0]["main"]
-    location = data["name"]
-    print(temp, hilow, weather, location)
+    description = data["weather"][0]["description"]
+    city_name = data["name"]
+    icon_link = "http://openweathermap.org/img/wn/{}.png".format(data["weather"][0]["icon"])
 
-    return render_template('main.html', location=location, temp=temp,
-                           hilow=hilow, weather=weather, date=today, message=message)
+    return render_template('main.html', city_name=city_name, temp=temp, high=high, low=low, date=today,
+                           weather=weather, description=description, icon_link=icon_link, message=message)
 
 
-def check_valid_zip(zip_code):
-    print("here.....")
-    code = int(zip_code)
-    if 500 < code < 99950:
+def valid_api_return(data):
+    if data["cod"] == 200:
         return True
     return False
 
 
-def get_weather_results(zip_code, api_key):
+def call_api(zip_code, api_key):
     api_url = "http://api.openweathermap.org/" \
               "data/2.5/weather?zip={}&units=imperial&appid={}".format(zip_code, api_key)
     res = requests.get(api_url)

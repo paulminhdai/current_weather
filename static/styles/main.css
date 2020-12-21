@@ -1,44 +1,41 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --background_pic: url('am.jpg');
+  --search_box_shadow: 1px solid #DF8E00;
 }
 
 body {
   font-family: 'montserrat', sans-serif;
-  background-image: url('pm.jpg');
+  background-image: var(--background_pic);
   background-size: auto;
   back-repeat: no-repeat;
   background-position: top center;
 }
 
-.app-wrap {
+.body-wrap {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
 }
 
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px 15px 15px;
+  padding: 60px 15px 15px;
   margin-bottom: 30px;
 }
 
 header input {
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   padding: 10px 15px;
   border: none;
-  outline: none;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 16px 16px 16px 16px;
-  border-bottom: 3px solid #DF8E00;
+  border-radius: 20px 20px 20px 20px;
+  border-bottom: var(--search_box_shadow);
 
-  color: #313131;
+  color: #B0C4DE;
   font-size: 20px;
   font-weight: 300;
   transition: 0.2s ease-out;
@@ -87,18 +84,56 @@ main {
   text-shadow: 2px 5px rgba(0, 0, 0, 0.6);
 }
 
-.current .weather {
-  color: #FFF;
-  font-size: 32px;
-  font-weight: 700;
-  font-style: italic;
-  margin-bottom: 2px;
-  text-shadow: 0px 3px rgba(0, 0, 0, 0.4);
+.current .container {
+    display: flex;
+    width: 345px;
+    margin-left: -10px;
 }
 
-.current .hi-low {
+.current .icon {
+  width: 15%;
+}
+
+.current .container img {
+    height: 80px;
+    vertical-align: middle;
+}
+
+.current .weather {
+  width: 65%;
+}
+
+.current .weather #weather {
   color: #FFF;
-  font-size: 24px;
+  font-size: 35px;
   font-weight: 500;
-  text-shadow: 0px 4px rgba(0, 0, 0, 0.4);
+  font-style: italic;
+  text-shadow: 0px 3px rgba(0, 0, 0, 0.4);
+  padding-left: 10px;
+  text-align: left;
+}
+
+.current .weather #description {
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  text-shadow: 0px 2px 6px rgba(150, 150, 150, 1);
+  margin-top: 0px;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.current .range {
+  flex-grow: 1;
+  color: #FFF;
+  font-size: 25px;
+  font-weight: 500;
+  text-shadow: 0px 2px 6px rgba(150, 150, 150, 1);
+}
+
+.current .range hr {
+    width: 53px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

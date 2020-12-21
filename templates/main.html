@@ -6,14 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Current Weather</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link id="theme-style" rel="stylesheet" type="text/css" href="">
 </head>
 
 <body>
     <div class="body-wrap">
         <header>
-            <form action="{{url_for('render_results')}}" method="post">
-                <input type="text" autocomplete="off" class="search-box" name="zipCode"
-                   placeholder="Enter a zip-code.">
+            <form class="search" action="{{url_for('render_main_page')}}" method="post">
+                <input class="search-box" type="text" name="zipCode"
+                   placeholder="Enter a zip-code">
                 {% if message %}
                     <div class="msg-err">{{message}}</div>
                 {% endif %}
@@ -21,15 +22,32 @@
         </header>
         <main>
             <section class="location">
-                <div class="city">{{location}}</div>
+                <div class="city">{{city_name}}</div>
                 <div class="date">{{date}}</div>
             </section>
-                <div class="current">
-                    <div class="temp">{{temp}}</div>
-                    <div class="weather">{{weather}}</div>
-                    <div class="hi-low">{{hilow}}</div>
+
+            <section class="current">
+                <div class="temp">{{temp}}</div>
+
+                <div class="container">
+                    <div class="icon">
+                        <img src={{icon_link}} alt="">
+                    </div>
+                    <div class="weather">
+                        <div id="weather">{{weather}}</div>
+                        <div id="description">{{description}}</div>
+                    </div>
+                    <div class="range">
+                        <div>{{low}}</div>
+                        <hr>
+                        <div>{{high}}</div>
+                    </div>
                 </div>
+            </section>
+
         </main>
     </div>
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
    </body>
 </html>
