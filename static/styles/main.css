@@ -1,11 +1,11 @@
 :root {
-  --background_pic: url('am.jpg');
+  --background_pic: url('am.png');
   --search_box_shadow: 1px solid #DF8E00;
 }
 
 body {
   font-family: 'montserrat', sans-serif;
-  background-image: var(--background_pic);
+  background: var(--background_pic) no-repeat fixed 0 0 / cover rgba(0, 0, 0, 0);
   background-position: top center;
   background-size: auto;
   back-repeat: no-repeat;
